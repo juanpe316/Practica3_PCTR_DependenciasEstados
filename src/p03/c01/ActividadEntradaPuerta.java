@@ -1,33 +1,59 @@
-package src.p03.c01;
+package Parque;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ActividadEntradaPuerta implements Runnable{
+/**
+ * Entradas por la puerta.
+ * 
+ * @author Juan Pedro Alarcón Gómez, Estíbalitz Díez Rioja.
+ * @since 1.0
+ * @version 1
+ */
+public class ActividadEntradaPuerta implements Runnable {
 
-		private static final int NUMENTRADAS = 20;
-		private String puerta;
-		private IParque parque;
+	/**
+	 * Número de entradas por la puerta.
+	 */
+	private static final int NUMENTRADAS = 20;
 
-		public ActividadEntradaPuerta(String puerta, IParque parque) {
-			this.puerta = puerta;
-			this.parque = parque;
-		}
+	/**
+	 * Puerta por la que accede al parque.
+	 */
+	private String puerta;
 
-		@Override
-		public void run() {
-			for (int i = 0; i < NUMENTRADAS; i ++) {
-				try {
-					parque.entrarAlParque(puerta);
-					TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5)*1000);
-				} catch (InterruptedException e) {
-					Logger.getGlobal().log(Level.INFO, "Entrada interrumpida");
-					Logger.getGlobal().log(Level.INFO, e.toString());
-					return;
-				}
+	/**
+	 * Objeto interfaz Parque.
+	 */
+	private IParque parque;
+
+	/**
+	 * Constructor de la clase.
+	 * 
+	 * @param puerta Recibido como parámetro.
+	 * @param parque Recibido como parámetro.
+	 */
+	public ActividadEntradaPuerta(String puerta, IParque parque) {
+		this.puerta = puerta;
+		this.parque = parque;
+	}
+
+	/**
+	 * Acceso al parque por la puerta.
+	 */
+	@Override
+	public void run() {
+		for (int i = 0; i < NUMENTRADAS; i++) {
+			try {
+				parque.entrarAlParque(puerta);
+				TimeUnit.MILLISECONDS.sleep(new Random().nextInt(5) * 1000);
+			} catch (InterruptedException e) {
+				Logger.getGlobal().log(Level.INFO, "Entrada interrumpida");
+				Logger.getGlobal().log(Level.INFO, e.toString());
+				return;
 			}
 		}
-
+	}
 }
